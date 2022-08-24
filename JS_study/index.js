@@ -1,5 +1,38 @@
+// let person = {
+//   //프로포티 삭제
+//   name: "이정환", //멤버 === 함수가 아닌 프로포티
+//   age: 25, // 멤버
+//   say: function () {
+//     console.log(`name: ${person["name"]}`);
+//     // console.log(`안녕 나는 ${this.name}`);
+//     // console.log(`안녕 나는 ${this["name"]}`);
+//     // 객체 안에 메서드를 만들게 되면 그 메서드 안에서는 자기 자신을 this라는 이름으로 부를 수 있다.
+//     // this === person
+//   } // 객체 안에 들어가있는 함수 === 메서드(방법) === 함수인 프로포티
+// };
 
+// console.log(`name: ${"name" in person}`);
+// console.log(`age : ${"age" in person}`);
+// console.log(`gender : ${"gender" in person}`);
+// // => person 객체에 name이라는 property가 있냐?
 
+// // console.log(person.gender);
+
+// // person.say();
+// // person["say"]();
+
+// // person.name = null;
+// // null을 사용하면 삭제한것과 같은 효과를 낸다
+// // 기존에 가지고 있던 문자 이정환을 메모리에서 날릴 수 있다
+
+// // delete person["name"];
+// // delete person.age;
+// // 이런 방식은 실제 이 객체와 삭제 대상인 프로포티간의 연결을 끊을뿐
+// // 실제로 메모리에서 name = 이정환이라는 메모리는 지워지지 않음(실제로는 메모리 계속 사용중)
+
+// // console.log(person);
+
+//-----------------------------//
 
 // let person = {
 //   //프로포티 삭제
