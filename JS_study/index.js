@@ -1,4 +1,571 @@
 
+
+
+
+
+//-----------------------------//
+
+// // 1초 뒤에 전달받은 파라미터에 곱하기 2를 하는 작업
+
+// function taskA(a, b, cb) {
+//   setTimeout(() => {
+//     const res = a + b;
+//     cb(res);
+//   }, 3000);
+// }
+
+// function taskB(a, cb) {
+//   setTimeout(() => {
+//     const res = a * 2;
+//     cb(res);
+//   }, 1000);
+// }
+
+// function taskC(a, cb) {
+//   setTimeout(() => {
+//     const res = a * -1;
+//     cb(res);
+//   }, 2000);
+// }
+
+// taskA(3, 4, (res) => {
+//   console.log("A TASK RESULT :", res);
+// });
+
+// taskB(7, (res) => {
+//   console.log("B TASK RESULT :", res);
+// });
+
+// taskC(14, (res) => {
+//   console.log("C TASK RESULT :", res);
+// });
+
+// console.log("코드 끝");
+
+//-----------------------------//
+
+// // taskA 함수가 두개의 파라미터를 받아서 setTimeout함수를 이용해서
+// // 3초 뒤에 그 두개를 더한 값을 구하는 함수
+
+// function taskA(a, b, cb) {
+//   setTimeout(() => {
+//     const res = a + b;
+//     // (a + b)를 res라는 지역상수에 저장함
+//     // 지역 상수란 스코프 안에서만 유효한 것
+//     cb(res);
+//     // 콜백함수 호출
+//   }, 3000);
+// }
+
+// taskA(3, 4, (res) => {
+//   console.log("A TASK RESULT : ", res);
+// });
+// console.log("코드 끝");
+
+//-----------------------------//
+
+// // 비동기적
+// // 먼저 지시된 작업이 끝날 때까지 기다리지 않고
+// // 다음 작업을 바로 시행하는 방식을 비동기 방식이라고 한다
+
+// function taskA() {
+//   setTimeout(() => {
+//     console.log("A TASK END");
+//   }, 2000);
+//   // A TASK END가 더 먼저 실행됐지만 2000ms를 기다리기 전에 아래가 먼저 실행됨
+//   // 타이머를 만들 수 있는 내장 비동기 함수
+//   // 자바스크립트에는 두개의 파라미터가 들어감
+//   // 두개의 파라미터 처음은 콜백함수 두번째는 딜레이타임 (ms 단위로 전달)
+// }
+
+// taskA();
+// console.log("코드 끝");
+// // 위에 2000ms를 기다리기 전에 아래 console.log가 먼저 실행됨
+
+//-----------------------------//
+
+// // 동기적 방식
+// // taskA 함수가 종료되기 전까지는 console.log라는 함수는 실행될 수가 없다
+
+// function taskA() {
+//   console.log("A 작업 끝");
+// }
+// taskA();
+// console.log("코드 끝");
+
+//동기 & 비동기---------------------------------------------------
+
+// // 배열에 spread 연산자 사용하기
+
+// const noTopingCookies = ["촉촉한쿠키", "안촉촉한쿠키"];
+// const topingCookies = ["바나나쿠키", "블루베리쿠키", "딸기쿠키", "초코칩쿠키"];
+
+// const allCookies = [...noTopingCookies, "함정쿠키", ...topingCookies];
+// // spread연산자를 이용하면 객체의 프로포티를 펼치는 것처럼 배열의 원소를 순서대로 펼칠 수 있다
+// console.log(allCookies);
+
+//-----------------------------//
+
+// // 세가지 쿠키를 객체로 만들기
+// // spreaad 연산자 이용 === 객체에 중복되는 요소를 펼침
+
+// const cookie = {
+//   base: "cookie",
+//   madeIn: "korea"
+// };
+
+// const chocochipCookie = {
+//   ...cookie,
+//   // spread 연산자 => 펼치는 연산자 => 객체의 값을 새로운 객체에 펼쳐주는 역할
+//   toping: "chocochip"
+// };
+
+// const blueberryCookie = {
+//   ...cookie,
+//   toping: "blueberry"
+// };
+
+// const strawberryCoookie = {
+//   ...cookie,
+//   toping: "strawberry"
+// };
+
+// console.log(chocochipCookie);
+// console.log(blueberryCookie);
+// console.log(strawberryCoookie);
+
+//-----------------------------//
+
+// // spread 연산자 사용 전
+
+// const cookie = {
+//   base: "cookie",
+//   madeIn: "Korea"
+// };
+
+// const chocochipCookie = {
+//   base: "cookie",
+//   madeIn: "korea",
+//   toping: "chocochip"
+// };
+// const blueberryCookie = {
+//   base: "cookie",
+//   madeIn: "korea",
+//   toping: "blueberry"
+// };
+
+// const strawberryCoookie = {
+//   base: "cookie",
+//   madeIn: "korea",
+//   toping: "strawberry"
+// };
+
+//Spread 연산자---------------------------------------------------
+
+// // 키값이 강제되는 것을 극복하기 위함
+// let object = { one: "one", two: "two", three: "three", name: "이정환" };
+
+// let { name: myName, one: oneOne, two, three, abc = "router" } = object;
+// // name이라는 키값을 기준으로 value를 myName이라는 변수에 할당하겠다
+// console.log(oneOne, two, three, myName, abc);
+
+//-----------------------------//
+
+// // 객체의 비구조화 할당
+// // 비구조화 할당 활용 후
+
+// let object = { one: "one", two: "two", three: "three", name: "이정환" };
+
+// let { name, one, two, three } = object;
+// // 배열의 인덱스를 이용하는게 아니라 키값을 기준으로
+// // 변수명이 키값으로 강제되는 한계가 있다
+// console.log(one, two, three, name);
+
+//-----------------------------//
+
+// 비구조화 할당 활용 전
+
+// let object = { one: "one", two: "two", three: "three" };
+
+// let one = object.one;
+// let two = object.two;
+// let three = object.three;
+
+// console.log(one, two, three);
+
+//-----------------------------//
+
+// // 두개 변수를 서로 바꾸는 스왑이라는 것에도 활용 가능
+// // 비구조화 활용 후
+
+// let a = 10;
+// let b = 20;
+
+// [a, b] = [b, a];
+// // 배열의 비구조화 할당 활용
+// console.log(a, b);
+
+//-----------------------------//
+
+// // 바구조화 활용 전
+
+// let a = 10;
+
+// let b = 20;
+
+// let tmp = 0;
+
+// tmp = a;
+// a = b;
+// b = tmp;
+// console.log(a, b);
+
+//-----------------------------//
+
+// // 배열의 선언 분리 비구조화 할당
+
+// let [one, two, three, four = "four"] = ["one", "two", "three"];
+// // 마지막 four라는 변수는 할당되지 못하기 때문에 undefine이라고 반환된다
+// // 기본값 설정을 위해 변수에 ="기본값"을 하면 할당되지 못하는 것을 해결할 수 있음
+
+// console.log(one, two, three, four);
+
+//-----------------------------//
+
+// // 비구조화 할당 적용하기
+
+// let arr = ["one", "two", "three"];
+
+// let [one, two, three] = arr;
+// // arr이라는 배열에 0번째 인덱스는 one이라는 변수 1번째 인덱스는 two,
+// // 2번째 인덱스에는 three라는 함수가 할당되도록
+// // 대괄호를 이용해서 배열의 값을 순서대로 할당받아서 사용할 수 있는 방법을 비구조화 할당
+// // === 배열의 기본변수 비구조화 할당
+
+// console.log(one, two, three);
+
+//-----------------------------//
+
+// let arr = ["one", "two", "three"];
+
+// let one = arr[0];
+// let two = arr[1];
+// let three = arr[2];
+
+// console.log(one, two, three);
+
+//비 구조화 할당---------------------------------------------------
+
+// // 객체 프로포티에 접근하는 괄호 표기법을 이용
+// const meal = {
+//   한식: "불고기",
+//   중식: "멘보사",
+//   일식: "초밥",
+//   양식: "스테이크",
+//   인도식: "카레"
+// };
+
+// const getMeal = (mealType) => {
+//   return meal[mealType] || "굶기";
+// };
+
+// console.log(getMeal("한식"));
+// console.log(getMeal());
+
+//-----------------------------//
+
+// // 한식인지 양식인지 중식인지 일식인지를 받고 각 음식의 대표 메뉴 리턴
+
+// const getMeal = (mealType) => {
+//   if (mealType === "한식") return "불고기";
+//   if (mealType === "양식") return "파스타";
+//   if (mealType === "중식") return "멘보사";
+//   if (mealType === "일식") return "초밥";
+//   return "굶기";
+// };
+
+// console.log(getMeal("한식"));
+// console.log(getMeal("중식"));
+// console.log(getMeal());
+
+//-----------------------------//
+
+// // // 주어진 문자열이 한식 종류에 해당하는지 검사하는 함수 2
+
+// function isKoreanFood(food) {
+//   if (["불고기", "떡볶이", "비빔밥"].includes(food)) {
+//     // food라는 파라미터가 이 배열안에 존재하면 true, 존재하지 않으면 false를 리턴
+//     return true;
+//   }
+//   return false;
+// }
+
+// const food1 = isKoreanFood("불고기");
+// const food2 = isKoreanFood("파스타");
+// console.log(food1);
+// console.log(food2);
+
+//-----------------------------//
+
+// // 주어진 문자열이 한식 종류에 해당하는지 검사하는 함수
+
+// function isKoreanFood(food) {
+//   if (food === "불고기" || food === "비빔밥" || food === "떡볶이") {
+//     return true;
+//   }
+//   return false;
+// }
+
+// const food1 = isKoreanFood("불고기");
+// const food2 = isKoreanFood("파스타");
+// console.log(food1);
+// console.log(food2);
+
+//조건문 업그레이드----------------------------------------------------
+
+// // truthy와 falsy를 이용한 단락회로 평가 응용
+// // 원래의 함수처럼 전달 받은 값이 falsy한 값일 때 그 값을 그대로 반환하지 않고
+// //"객체가 아닙니다"라는 값을 반환
+
+// const getName = (person) => {
+//   const name = person && person.name; // 이정환
+//   // person이 undefine이 아니기 때문에 person이 truthy여서 그 다음으로 넘어가고
+//   // person.name이 truthy여서 person.name의 값을 반환한다
+//   return name || "객체가 아닙니다";
+//   // name이 이정환이라는 값은 빈 문자열이 아니기 때문에 truthy하다
+//   // truthy하기 때문에 이 뒤에 값을 볼 필요가 없다
+//   // OR의 단락회로 평가는 앞에가 truthy하거나 true하면
+//   // 그 값을 반환하는 걸로 종료하기 때문
+// };
+
+// // let person = { name: "이정환" };
+// let person = null;
+// const name = getName(person);
+// console.log(name);
+
+//-----------------------------//
+
+// // truthy와 falsy를 이용한 단락회로 평가 응용 => 함수를 포함한 프로그램
+
+// const getName = (person) => {
+//   return person && person.name;
+//   // 앞에 값이 undefine으로 falsy한 값이기 때문에 뒤에를 볼 필요 없이
+//   // person의 값을 반환한다.
+// };
+
+// let person;
+// const name = getName(person);
+// console.log(name);
+
+//-----------------------------//
+
+// // 주어진 객체에서 name이라는 프로포티를 반환하는 getName이라는 함수를 생성
+// // 이것을 단락회로 평가 방법을 이용하여 위의 코드 처럼 더욱 더 단축하여 사용 가능하다
+// const getName = (person) => {
+//   if (!person) {
+//     return "객체가 아닙니다";
+//   }
+//   return person.name;
+// };
+
+// let person;
+// const name = getName(person);
+// console.log(name);
+
+//-----------------------------//
+
+// // 논리 연산자 복습 및 단락회로 평가
+
+// // console.log(true && true);
+// console.log(false && true); // 단락회로 평가
+// // 단락회로 평가는 왼쪽에서 오른쪽으로 연산하게되는 논리연산자의 연산 순서를 이용
+// // 첫번째 피연산자가 false가 되버리면 뒤에있는 피연산자는 볼 필요가 없게 된다
+// // 왜냐? "&&"연산자는 한쪽이라도 false이면 false이기 때문에
+// // 피연산자 중에 뒤에 위치한 피연산자를 확인할 필요 없이
+// // 그냥 연산을 끝내버리는 경우를 단락회로 평가라고 한다
+
+// // console.log(true || false);
+// console.log(true || false); // 단락회로 평가
+
+// // console.log(!true);
+
+//단락회로 평가----------------------------------------------------
+
+// // 학점 계산 프로그램 if문으로 작성해보기
+// let score = 40;
+
+// if (score >= 90) {
+//   console.log("A+");
+// } else if (score >= 50) {
+//   console.log("B+");
+// } else {
+//   console.log("F");
+// }
+
+//-----------------------------//
+
+// // 삼항 연산자 중첩하여 사용 === TODO : 학점 계산 프로그램
+// // 90점 이상 A+
+// // 50점 이상 B+
+// // 둘 다 아니면 F
+
+// let score = 100;
+
+// score >= 90
+//   ? console.log("A+")
+//   : score >= 50
+//   ? console.log("B+")
+//   : console.log("F");
+// // 중첩으로 사용할 때는 if문으로 사용하는 것이 좋다
+
+//-----------------------------//
+
+// // 주어진 값이 null이거나 undefine이 아닌지를 판단하는 프로그램
+
+// let a = [];
+// // let a;
+
+// const result = a ? true : false;
+
+// console.log(result);
+
+//-----------------------------//
+
+// // 값을 참일때와 거짓일때를 구분해서 반환
+
+// let a = [1, 23];
+
+// const arrayStatus = a.length === 0 ? "빈 배열" : "안 빈 배열";
+
+// console.log(arrayStatus);
+
+//-----------------------------//
+
+// // 삼항 연산자 이용
+// let a = [];
+
+// a.length === 0 ? console.log("빈 배열") : console.log("안 빈 배열");
+
+//-----------------------------//
+
+// // 주어진 배열이 비어져있는지 확인
+
+// let a = [];
+
+// if (a.length === 0) {
+//   console.log("빈 배열");
+// } else {
+//   console.log("안 빈 배열");
+// }
+
+//-----------------------------//
+
+//삼항 연산자 이용
+
+// let a = 3;
+
+// a >= 0 ? console.log("양수") : console.log("음수");
+// // 조건식 -> "?"(이 앞까지가 조건식이다) -> 참일 때 수행할 식 -> ":"
+// // -> 거짓일 때 수행할 식 -> ";"으로 마무리
+
+//-----------------------------//
+
+// // 기본 조건문
+
+// let a = 3;
+// if (a >= 0) {
+//   console.log("양수");
+// } else {
+//   console.log("음수");
+// }
+
+//삼항 연산자----------------------------------------------------
+
+// //한번에 적용시키고 싶을 때
+
+// const getName = (person) => {
+//   if (!person) {
+//     // false + NOT => True
+//     return "객체가 아닙니다";
+//   }
+//   return person.name;
+// };
+
+// let person = undefined;
+// const name = getName(person);
+// console.log(name);
+
+//-----------------------------//
+
+// // 다른 것도 적용시키고 싶을 때
+
+// const getName = (person) => {
+//   if (person === undefined || person === null) {
+//     return "객체가 아닙니다";
+//   }
+//   return person.name;
+// };
+
+// let person = null;
+// const name = getName(person);
+// console.log(name);
+
+//-----------------------------//
+
+// undefine일 때
+
+// const getName = (person) => {
+//   if (person === undefined) {
+//     // undefine을 조건문을 통해 전달받은 파라미터가 객체인지 또는 undefine은 아닌지 null은 아닌지 판단해야함
+//     return "객체가 아닙니다";
+//   }
+//   return person.name;
+//   //위에 조건에 충족하여 해당 실행문이 실행되지 않게 한다.
+// };
+
+// let person;
+// // person이라는 값을 undefined로 전달하려면 점 표기법을 사용하면 안된다
+// // undefine은 객체가 아니기 때문에 내부 프로포티에 접근 불가
+// const name = getName(person);
+// console.log(name);
+
+//-----------------------------//
+
+// const getName = (person) => {
+//   return person.name;
+// };
+
+// let person = { name: "이정환" };
+// const name = getName(person);
+// // getName이라는 함수에 전달하는 person 파라미터가
+// // name이라는 프로포티를 갖고 있는 객체를 전달
+
+// console.log(name);
+
+//-----------------------------//
+
+// let a = null;
+// // 거짓이 아니야도 거짓으로 분류되는 falsy
+
+// if (a) {
+//   console.log("TRUE");
+// } else {
+//   console.log("FALSE");
+// }
+
+//-----------------------------//
+
+// let a = [];
+// // 참이 아니여도 참으로 분류하는 값들을 참 같은 값이라고 하여 truthy
+
+// if (a) {
+//   console.log("TRUE");
+// } else {
+//   console.log("FALSE");
+// }
+
+//Truthy & Falsy----------------------------------------------------
+
 // // 배열 내에 모든 요소들을 문자열 형태로 합치는 메서드
 
 // const arr = ["이정환", "님", "안녕하세요", "또 오셨군요"];
