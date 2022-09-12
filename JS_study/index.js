@@ -3,6 +3,365 @@
 
 
 
+
+// Node.js란---------------------------------------------------
+
+// async function getData() {
+//   let rawResponse = await fetch("https://jsonplaceholder.typicode.com/posts");
+//   let jsonResponse = await rawResponse.json();
+//   console.log(jsonResponse);
+// }
+
+// getData();
+// // fetch는 API를 호출할 수 있도록 도와주는 내장함수
+// // 비동기처리 함수(then을 통해 사용 가능)
+
+// API & fetch---------------------------------------------------
+
+// // await
+
+// function delay(ms) {
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       resolve();
+//     }, ms);
+//   });
+// }
+
+// // await 이용 후
+// async function helloAsync() {
+//   await delay(3000);
+//   return "hello async";
+// }
+
+// // await 이용 전
+// // async function helloAsync() {
+// //   return delay(3000).then(() => {
+// //     return "hello Async";
+// //   });
+// // }
+
+// async function main() {
+//   const res = await helloAsync();
+//   console.log(res);
+// }
+
+// main();
+
+//-----------------------------//
+
+// // async
+
+// function hello() {
+//   return "hello";
+// }
+
+// async function helloAsync() {
+//   return "hello Async";
+// }
+// // helloAsync 함수에서는 promise 리턴하고 있다
+// // async를 함수에 붙이면 함비동기처리 함수가 된다
+// // 즉 promise를 반환한다는 것은 console.log를 사용하지 않고
+// // then을 사용해도 된다는 얘기이다
+
+// helloAsync().then((res) => {
+//   console.log(res);
+// });
+// //
+
+// // console.log(hello());
+// // console.log(helloAsync());
+
+// async & await - 직관적인 비 동기 처리 코드 작성하기---------------------------------------------------
+
+// // 중간에 껴넣기
+
+// function taskA(a, b) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       const res = a + b;
+//       resolve(res);
+//     }, 3000);
+//   });
+// }
+
+// function taskB(a) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       const res = a * 2;
+//       resolve(res);
+//     }, 1000);
+//   });
+// }
+
+// function taskC(a) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       const res = a * -1;
+//       resolve(res);
+//     }, 2000);
+//   });
+// }
+
+// const bPromiseResult = taskA(5, 1).then((a_res) => {
+//   console.log("A RESULT : ", a_res);
+//   return taskB(a_res);
+// });
+
+// console.log("bladfskladfsljf");
+// console.log("bladfskladfsljf");
+// console.log("bladfskladfsljf");
+// console.log("bladfskladfsljf");
+// console.log("bladfskladfsljf");
+
+// bPromiseResult
+//   .then((b_res) => {
+//     console.log("B RESULT : ", b_res);
+//     return taskC(b_res);
+//   })
+//   .then((c_res) => {
+//     console.log("C RESULT : ", c_res);
+//   });
+
+//-----------------------------//
+
+// Promise 사용
+
+// function taskA(a, b) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       const res = a + b;
+//       resolve(res);
+//     }, 3000);
+//   });
+// }
+
+// function taskB(a) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       const res = a * 2;
+//       resolve(res);
+//     }, 1000);
+//   });
+// }
+
+// function taskC(a) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       const res = a * -1;
+//       resolve(res);
+//     }, 2000);
+//   });
+// }
+
+// taskA(5, 1)
+//   .then((a_res) => {
+//     console.log("A RESULT : ", a_res);
+//     return taskB(a_res);
+//   })
+//   .then((b_res) => {
+//     console.log("B RESULT : ", b_res);
+//     return taskC(b_res);
+//   })
+//   .then((c_res) => {
+//     console.log("C RESULT : ", c_res);
+//   });
+
+//-----------------------------//
+
+// function taskA(a, b) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       const res = a + b;
+//       resolve(res);
+//     }, 3000);
+//   });
+// }
+
+// function taskB(a) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       const res = a * 2;
+//       resolve(res);
+//     }, 1000);
+//   });
+// }
+
+// function taskC(a) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       const res = a * -1;
+//       resolve(res);
+//     }, 2000);
+//   });
+// }
+
+// taskA(5, 1).then((a_res) => {
+//   console.log("A RESULT : ", a_res);
+//   taskB(a_res).then((b_res) => {
+//     console.log("B RESULT : ", b_res);
+//     taskC(b_res).then((c_res) => {
+//       console.log("C RESULT : ", c_res);
+//     });
+//   });
+// });
+// // Promise객체와 그 메서인 then은 콜백함수를 쓰는 식으로 사용하게 되면
+// // 콜백 지옥이 또 나타나게된다
+
+// // // 콜백 지옥
+// // taskA(3, 4, (a_res) => {
+// //   console.log("task A : ", a_res);
+// //   taskB(a_res, (b_res) => {
+// //     console.log("task B : ", b_res);
+// //     taskC(b_res, (c_res) => {
+// //       console.log("task C : ", c_res);
+// //     });
+// //   });
+// // });
+
+//-----------------------------//
+
+// function isPositive(number, resolve, reject) {
+//   setTimeout(() => {
+//     if (typeof number === "number") {
+//       // 성공 -> resolve
+//       resolve(number >= 0 ? "양수" : "음수");
+//     } else {
+//       // 실패 -> reject
+//       reject("주어진 값이 숫자형 값이 아닙니다");
+//     }
+//   }, 2000);
+// }
+
+// function isPositiveP(number) {
+//   const executor = (resolve, reject) => {
+//     setTimeout(() => {
+//       if (typeof number === "number") {
+//         console.log(number);
+//         resolve(number >= 0 ? "양수" : "음수");
+//       } else {
+//         reject("주어진 값이 숫자형 값이 아닙니다");
+//       }
+//     }, 2000);
+//   };
+
+//   const asyncTask = new Promise(executor);
+//   return asyncTask;
+// }
+
+// const res = isPositiveP([]);
+
+// res
+//   .then((res) => {
+//     console.log("작업 성공 : ", res);
+//   })
+//   .catch((err) => {
+//     console.log("작업 실패 : ", err);
+//   });
+
+//-----------------------------//
+
+// function isPositive(number, resolve, reject) {
+//   setTimeout(() => {
+//     if (typeof number === "number") {
+//       // 성공 -> resolve
+//       resolve(number >= 0 ? "양수" : "음수");
+//     } else {
+//       // 실패 -> reject
+//       reject("주어진 값이 숫자형 값이 아닙니다");
+//     }
+//   }, 2000);
+// }
+
+// function isPositiveP(number) {
+//   const executor = (resolve, reject) => {
+//     // 실행자
+//     setTimeout(() => {
+//       if (typeof number === "number") {
+//         console.log(number);
+//         resolve(number >= 0 ? "양수" : "음수");
+//       } else {
+//         reject("주어진 값이 숫자형 값이 아닙니다");
+//       }
+//     }, 2000);
+//   };
+
+//   const asyncTask = new Promise(executor);
+//   // return asyncTask;
+//   return asyncTask;
+// }
+
+// const res = isPositiveP(101);
+
+// res
+//   .then((res) => {
+//     console.log("작업 성공 : ",res);
+//   })
+//   .catch((err) => {
+//      console.log("작업 실패 : ",err);
+//   });
+
+//-----------------------------//
+
+// function isPositive(number, resolve, reject) {
+//   setTimeout(() => {
+//     if (typeof number === "number") {
+//       resolve(number >= 0 ? "양수" : "음수");
+//     } else {
+//       reject("주어진 값이 숫자형 값이 아닙니다");
+//     }
+//   }, 2000);
+// }
+
+// isPositive(
+//   [],
+//   (res) => {
+//     console.log("성공적으로 수행됨 : ", res);
+//   },
+//   (err) => {
+//     console.log("실패 하였음 : ", err);
+//   }
+// );
+
+//Promise---------------------------------------------------
+
+// // 콜백함수에 콜백함수에 콜백함수를 넣어서
+// // 비동기처리에 결과를 또 다른 비동기 처리에 값으로 전달
+// // 콜백 헬, 콜백 지옥
+
+// function taskA(a, b, cb) {
+//   setTimeout(() => {
+//     const res = a + b;
+//     cb(res);
+//   }, 3000);
+// }
+
+// function taskB(a, cb) {
+//   setTimeout(() => {
+//     const res = a * 2;
+//     cb(res);
+//   }, 1000);
+// }
+
+// function taskC(a, cb) {
+//   setTimeout(() => {
+//     const res = a * -1;
+//     cb(res);
+//   }, 2000);
+// }
+
+// taskA(4, 5, (a_res) => {
+//   console.log("A RESULT : ", a_res);
+//   taskB(a_res, (b_res) => {
+//     console.log("B RESULT : ", b_res);
+//     taskC(b_res, (c_res) => {
+//       console.log("C RESULT : ", c_res);
+//     });
+//   });
+// });
+
+// console.log("코드 끝");
+
 //-----------------------------//
 
 // // 1초 뒤에 전달받은 파라미터에 곱하기 2를 하는 작업
